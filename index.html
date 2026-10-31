@@ -3,223 +3,307 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sunrise Public School - Welcome</title>
+<title>Sri Sai Model School - 3D View</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; background: #f8fafc; line-height: 1.6; }
-
-  /* Navbar */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 14px 6%; background: rgba(15,23,42,0.85); backdrop-filter: blur(8px);
-    color: #fff;
+  * { box-sizing: border-box; }
+  body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; background: #bfe6ff; }
+  #wrap { position: fixed; inset: 0; }
+  .title {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    background: rgba(15,23,42,0.75); color: #fff; padding: 10px 22px;
+    border-radius: 12px; text-align: center; z-index: 2; pointer-events: none;
   }
-  nav .logo { font-weight: 700; font-size: 20px; }
-  nav ul { list-style: none; display: flex; gap: 24px; }
-  nav a { color: #e2e8f0; text-decoration: none; font-size: 15px; }
-  nav a:hover { color: #38bdf8; }
-
-  /* Hero with 3D */
-  .hero {
-    position: relative; height: 100vh; min-height: 560px;
-    display: flex; align-items: center; justify-content: center;
-    background: #0f172a; color: #fff; overflow: hidden;
+  .title h1 { margin: 0; font-size: 22px; }
+  .title p { margin: 4px 0 0; font-size: 13px; opacity: 0.85; }
+  .controls {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 10px; z-index: 2;
   }
-  #hero-canvas { position: absolute; inset: 0; }
-  .hero-text {
-    position: relative; z-index: 2; text-align: center;
-    background: rgba(15,23,42,0.55); padding: 30px 40px; border-radius: 16px;
-    max-width: 720px; margin: 0 20px;
+  button {
+    padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer;
+    background: #0284c7; color: #fff; font-weight: bold; font-size: 14px;
   }
-  .hero-text h1 { font-size: clamp(32px, 5vw, 56px); margin-bottom: 12px; }
-  .hero-text h1 span { color: #38bdf8; }
-  .hero-text p { font-size: 18px; opacity: 0.9; margin-bottom: 24px; }
-  .btn {
-    display: inline-block; padding: 12px 28px; margin: 6px;
-    border-radius: 999px; text-decoration: none; font-weight: 600;
-    background: #38bdf8; color: #0f172a; transition: transform 0.2s;
-  }
-  .btn.outline { background: transparent; color: #fff; border: 2px solid #fff; }
-  .btn:hover { transform: translateY(-3px); }
-
-  /* Sections */
-  section { padding: 80px 6%; }
-  section h2 { text-align: center; font-size: 34px; margin-bottom: 12px; color: #0f172a; }
-  section .sub { text-align: center; color: #64748b; margin-bottom: 40px; }
-
-  .about { background: #fff; }
-  .about-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;
-  }
-  .stat {
-    text-align: center; padding: 28px; border-radius: 14px; background: #f1f5f9;
-  }
-  .stat strong { display: block; font-size: 36px; color: #0284c7; }
-
-  .cards {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
-  }
-  .card {
-    background: #fff; padding: 28px; border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(15,23,42,0.08);
-    border-top: 4px solid #38bdf8; transition: transform 0.25s;
-  }
-  .card:hover { transform: translateY(-6px); }
-  .card h3 { margin-bottom: 8px; color: #0f172a; }
-  .card p { color: #475569; font-size: 15px; }
-
-  .courses { background: #f1f5f9; }
-
-  .contact { background: #0f172a; color: #e2e8f0; }
-  .contact h2 { color: #fff; }
-  .contact .sub { color: #94a3b8; }
-  .contact-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
-    max-width: 900px; margin: 0 auto;
-  }
-  .contact-box {
-    background: #1e293b; padding: 24px; border-radius: 14px; text-align: center;
-  }
-  .contact-box h3 { color: #38bdf8; margin-bottom: 8px; }
-
-  footer {
-    background: #020617; color: #64748b; text-align: center; padding: 20px; font-size: 14px;
-  }
-
-  @media (max-width: 680px) {
-    nav ul { display: none; }
-    section { padding: 60px 5%; }
-  }
+  button:hover { background: #0369a1; }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo">Sunrise Public School</div>
-  <ul>
-    <li><a href="#about">Parichay</a></li>
-    <li><a href="#courses">Courses</a></li>
-    <li><a href="#facilities">Suvidhayein</a></li>
-    <li><a href="#contact">Sampark</a></li>
-  </ul>
-</nav>
+<div id="wrap"></div>
 
-<!-- HERO -->
-<header class="hero">
-  <div id="hero-canvas"></div>
-  <div class="hero-text">
-    <h1>Swagat hai <span>Sunrise Public School</span> mein</h1>
-    <p>Gyaan, anushasan aur rachnatmakta ke saath bacchon ka bhavishya gadhna.</p>
-    <a href="#contact" class="btn">Admission Puchhein</a>
-    <a href="#about" class="btn outline">Aur Jaane</a>
-  </div>
-</header>
+<div class="title">
+  <h1>Sri Sai Model School</h1>
+  <p>Mouse drag: ghumayein &bull; Scroll: zoom karein</p>
+</div>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <h2>Hamare Bare Mein</h2>
-  <p class="sub">1995 se bacchon ki shiksha aur vikas mein samarpit</p>
-  <div class="about-grid">
-    <div class="stat"><strong>30+</strong>Saal ka anubhav</div>
-    <div class="stat"><strong>1500+</strong>Chhatra</div>
-    <div class="stat"><strong>80+</strong>Anubhavi shikshak</div>
-    <div class="stat"><strong>95%</strong>Parinaam</div>
-  </div>
-</section>
-
-<!-- COURSES -->
-<section class="courses" id="courses">
-  <h2>Shaikshik Kaksha</h2>
-  <p class="sub">Nursery se Class 12 tak</p>
-  <div class="cards">
-    <div class="card"><h3>Primary (Nursery - 5)</h3><p>Khel-khel mein seekhne ka tareeka, bhasha, ganit aur kala par vishesh dhyan.</p></div>
-    <div class="card"><h3>Middle (6 - 8)</h3><p>Vishay ki samajh, project based learning aur computer shiksha.</p></div>
-    <div class="card"><h3>Secondary (9 - 10)</h3><p>Board pariksha ki taiyari, niyamit mock tests aur vyaktigat mentoring.</p></div>
-    <div class="card"><h3>Senior Secondary (11 - 12)</h3><p>Science, Commerce aur Humanities streams ke saath career marg-darshan.</p></div>
-  </div>
-</section>
-
-<!-- FACILITIES -->
-<section id="facilities">
-  <h2>Suvidhayein</h2>
-  <p class="sub">Bacchon ke vikas ke liye aadhunik vyavastha</p>
-  <div class="cards">
-    <div class="card"><h3>Smart Classrooms</h3><p>Projector aur digital boards ke saath interactive padhai.</p></div>
-    <div class="card"><h3>Science Lab</h3><p>Physics, Chemistry aur Biology ki prayogshala.</p></div>
-    <div class="card"><h3>Library</h3><p>10,000 se zyada kitaabon ke saath shaant padhne ki jagah.</p></div>
-    <div class="card"><h3>Khel Maidan</h3><p>Cricket, football aur indoor games ki suvidha.</p></div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <h2>Sampark Karein</h2>
-  <p class="sub">Admission ya kisi bhi jaankari ke liye hamse judein</p>
-  <div class="contact-grid">
-    <div class="contact-box"><h3>Pata</h3><p>123 School Road, Aapka Shahar</p></div>
-    <div class="contact-box"><h3>Phone</h3><p>+91 00000 00000</p></div>
-    <div class="contact-box"><h3>Email</h3><p>info@sunriseschool.edu</p></div>
-  </div>
-</section>
-
-<footer>© 2026 Sunrise Public School. Sabhi adhikar surakshit.</footer>
+<div class="controls">
+  <button id="rotateBtn">Auto Rotate: Band</button>
+  <button id="busBtn">Bus Chalao</button>
+  <button id="resetBtn">Reset View</button>
+</div>
 
 <!-- Three.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- OrbitControls -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
 <script>
-  // Hero section mein animated 3D background
-  const heroWrap = document.getElementById('hero-canvas');
+  // ---------- Scene ----------
+  const wrap = document.getElementById('wrap');
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 100);
-  camera.position.z = 6;
+  scene.background = new THREE.Color(0xbfe6ff);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.1, 500);
+  const startPos = new THREE.Vector3(14, 7, 18);
+  camera.position.copy(startPos);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(heroWrap.clientWidth, heroWrap.clientHeight);
-  heroWrap.appendChild(renderer.domElement);
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.shadowMap.enabled = true;
+  wrap.appendChild(renderer.domElement);
 
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.target.set(0, 3, 0);
+  controls.maxPolarAngle = Math.PI / 2 - 0.05; // zameen ke neeche na jaye
+  controls.update();
+
+  // ---------- Lights ----------
   scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-  const light = new THREE.DirectionalLight(0x38bdf8, 1.2);
-  light.position.set(3, 4, 5);
-  scene.add(light);
+  const sun = new THREE.DirectionalLight(0xffffff, 1.0);
+  sun.position.set(10, 20, 12);
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.camera.left = -25; sun.shadow.camera.right = 25;
+  sun.shadow.camera.top = 25; sun.shadow.camera.bottom = -25;
+  scene.add(sun);
 
-  // Ghoomte hue geometric shapes
-  const shapes = [];
-  const geos = [
-    new THREE.IcosahedronGeometry(0.8, 0),
-    new THREE.OctahedronGeometry(0.7, 0),
-    new THREE.TorusGeometry(0.6, 0.2, 16, 40)
-  ];
-  const colors = [0x38bdf8, 0xa3e635, 0xf472b6];
-  for (let i = 0; i < 9; i++) {
+  // ---------- Helper: box banane ka function ----------
+  function box(w, h, d, color, x, y, z, parent = scene, opts = {}) {
     const mat = new THREE.MeshStandardMaterial({
-      color: colors[i % colors.length], metalness: 0.3, roughness: 0.4,
-      transparent: true, opacity: 0.8
+      color, roughness: opts.roughness ?? 0.8, metalness: opts.metalness ?? 0.0
     });
-    const mesh = new THREE.Mesh(geos[i % geos.length], mat);
-    mesh.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 3);
-    mesh.userData.speed = 0.003 + Math.random() * 0.008;
-    scene.add(mesh);
-    shapes.push(mesh);
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+    m.position.set(x, y, z);
+    m.castShadow = true;
+    m.receiveShadow = true;
+    parent.add(m);
+    return m;
   }
+
+  // ---------- Zameen aur road ----------
+  const ground = new THREE.Mesh(
+    new THREE.PlaneGeometry(80, 80),
+    new THREE.MeshStandardMaterial({ color: 0x84cc16 })
+  );
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  // Road (school ke saamne)
+  const road = new THREE.Mesh(
+    new THREE.PlaneGeometry(80, 6),
+    new THREE.MeshStandardMaterial({ color: 0x475569 })
+  );
+  road.rotation.x = -Math.PI / 2;
+  road.position.set(0, 0.01, 8.5);
+  road.receiveShadow = true;
+  scene.add(road);
+
+  // Footpath
+  box(80, 0.15, 1.6, 0xcbd5e1, 0, 0.08, 5.2);
+
+  // ---------- School building ----------
+  const school = new THREE.Group();
+  scene.add(school);
+
+  const FH = 1.6;           // ek floor ki height
+  const FLOORS = 4;         // ground + 3 upar
+  const H = FH * FLOORS;    // total height
+  const MAIN_W = 6, MAIN_D = 4.5;
+
+  // Main block (white)
+  box(MAIN_W, H, MAIN_D, 0xf8fafc, 0, H / 2, 0, school);
+
+  // Roof parapet
+  box(MAIN_W + 0.2, 0.25, MAIN_D + 0.2, 0xe2e8f0, 0, H + 0.12, 0, school);
+
+  // Brown vertical panels (photo jaisa)
+  const panelColor = 0x8b7b72;
+  [-2.9, -0.4].forEach(x => {
+    box(0.6, H - 0.2, 0.1, panelColor, x, H / 2, MAIN_D / 2 + 0.02, school);
+  });
+
+  // Windows (front face)
+  const winXs = [-2.4, -1.4, 1.2, 2.2];
+  for (let f = 0; f < FLOORS; f++) {
+    const y = f * FH + FH / 2;
+    winXs.forEach(x => {
+      box(0.82, 0.72, 0.06, 0xffffff, x, y, MAIN_D / 2 + 0.05, school);        // frame
+      const glass = box(0.66, 0.56, 0.08, 0x1e3a5f, x, y, MAIN_D / 2 + 0.07, school, { roughness: 0.2, metalness: 0.5 });
+    });
+  }
+
+  // Logo (kitab wala badge)
+  const logoCircle = new THREE.Mesh(
+    new THREE.CircleGeometry(0.4, 32),
+    new THREE.MeshStandardMaterial({ color: 0x38bdf8, side: THREE.DoubleSide })
+  );
+  logoCircle.position.set(-0.1, 2.4, MAIN_D / 2 + 0.1);
+  school.add(logoCircle);
+
+  // Naam ka sign (roof ke neeche)
+  const signCanvas = document.createElement('canvas');
+  signCanvas.width = 1024; signCanvas.height = 200;
+  const g = signCanvas.getContext('2d');
+  g.fillStyle = '#ffffff';
+  g.fillRect(0, 0, 1024, 200);
+  g.fillStyle = '#111827';
+  g.font = 'bold 84px Arial';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.fillText('SRI SAI MODEL SCHOOL', 512, 104);
+  const signTex = new THREE.CanvasTexture(signCanvas);
+  const sign = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.8, 0.75),
+    new THREE.MeshStandardMaterial({ map: signTex })
+  );
+  sign.position.set(-0.6, H - 0.6, MAIN_D / 2 + 0.12);
+  school.add(sign);
+
+  // Right wing (balconies wali side)
+  const WING_X = 5.2, WING_W = 2.6;
+  box(WING_W, H, MAIN_D, 0xf1f5f9, WING_X, H / 2, 0, school);
+  box(WING_W + 0.2, 0.25, MAIN_D + 0.2, 0xe2e8f0, WING_X, H + 0.12, 0, school);
+  for (let f = 1; f < FLOORS; f++) {
+    const y = f * FH;
+    // Balcony slab
+    box(WING_W, 0.15, 1.0, 0xffffff, WING_X, y, MAIN_D / 2 + 0.5, school);
+    // Railing
+    box(WING_W, 0.5, 0.04, 0x334155, WING_X, y + 0.33, MAIN_D / 2 + 0.98, school);
+    // Balcony ke peeche ka dark interior
+    box(WING_W - 0.2, FH - 0.3, 0.1, 0x6b5b53, WING_X, y + FH / 2, MAIN_D / 2 + 0.03, school);
+  }
+
+  // Entrance portico
+  const ENTRY_Z = MAIN_D / 2 + 0.9;
+  box(2.6, 0.15, 1.6, 0x475569, 2.0, 2.2, ENTRY_Z, school);
+  box(0.15, 2.0, 0.15, 0x334155, 0.8, 1.1, ENTRY_Z + 0.6, school);
+  box(0.15, 2.0, 0.15, 0x334155, 3.2, 1.1, ENTRY_Z + 0.6, school);
+  // Seedhiyan
+  box(2.2, 0.15, 0.5, 0xd1d5db, 2.0, 0.08, ENTRY_Z + 1.0, school);
+
+  // Gate (dark pillars + railing)
+  const GATE_Z = 6.2;
+  box(0.4, 1.4, 0.4, 0x1f2937, -3.5, 0.7, GATE_Z, scene);
+  box(0.4, 1.4, 0.4, 0x1f2937, 6.5, 0.7, GATE_Z, scene);
+  for (let x = -3.1; x < 6.2; x += 0.45) {
+    box(0.08, 1.0, 0.08, 0x111827, x, 0.5, GATE_Z, scene);
+  }
+
+  // Hedges (hari jhaadiyan)
+  for (let x = -2; x <= 6; x += 0.8) {
+    const h = new THREE.Mesh(
+      new THREE.SphereGeometry(0.35, 16, 16),
+      new THREE.MeshStandardMaterial({ color: 0x166534 })
+    );
+    h.position.set(x, 0.3, 5.0);
+    h.castShadow = true;
+    scene.add(h);
+  }
+
+  // ---------- Trees ----------
+  function tree(x, z, s = 1) {
+    const trunk = box(0.3 * s, 2 * s, 0.3 * s, 0x78350f, x, s, z);
+    const crown = new THREE.Mesh(
+      new THREE.SphereGeometry(1.4 * s, 20, 20),
+      new THREE.MeshStandardMaterial({ color: 0x15803d })
+    );
+    crown.position.set(x, 2.8 * s, z);
+    crown.castShadow = true;
+    scene.add(crown);
+  }
+  tree(-9, 2, 1.2);
+  tree(-12, -2, 1.0);
+  tree(12, 1, 1.1);
+  tree(15, -3, 1.3);
+
+  // ---------- School bus ----------
+  const bus = new THREE.Group();
+  const yellow = new THREE.MeshStandardMaterial({ color: 0xfacc15 });
+  const dark = new THREE.MeshStandardMaterial({ color: 0x1e293b });
+
+  const busBody = new THREE.Mesh(new THREE.BoxGeometry(3.2, 1.2, 1.4), yellow);
+  busBody.position.set(0, 0.85, 0);
+  busBody.castShadow = true;
+  bus.add(busBody);
+
+  const busWindows = new THREE.Mesh(new THREE.BoxGeometry(2.9, 0.4, 1.45), dark);
+  busWindows.position.set(0, 1.3, 0);
+  bus.add(busWindows);
+
+  [-1.1, -0.1, 0.9].forEach(x => {
+    const w = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.4, 1.46), yellow);
+    w.position.set(x, 1.3, 0);
+    bus.add(w);
+  });
+
+  [-1.0, 1.0].forEach(x => {
+    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.25, 16), dark);
+    wheel.rotation.x = Math.PI / 2;
+    wheel.position.set(x, 0.28, 0.75);
+    wheel.castShadow = true;
+    bus.add(wheel);
+    const wheel2 = wheel.clone();
+    wheel2.position.z = -0.75;
+    bus.add(wheel2);
+  });
+
+  bus.position.set(-2, 0, 8.5);
+  bus.rotation.y = Math.PI / 2;
+  scene.add(bus);
+
+  // ---------- Animation ----------
+  let driving = false;
+  let autoRotate = false;
+  controls.autoRotateSpeed = 1.0;
 
   function animate() {
     requestAnimationFrame(animate);
-    shapes.forEach(s => {
-      s.rotation.x += s.userData.speed;
-      s.rotation.y += s.userData.speed * 1.5;
-    });
+    if (driving) {
+      bus.position.x += 0.04;
+      if (bus.position.x > 25) bus.position.x = -25;
+    }
+    controls.autoRotate = autoRotate;
+    controls.update();
     renderer.render(scene, camera);
   }
   animate();
 
+  // ---------- Buttons ----------
+  const rotateBtn = document.getElementById('rotateBtn');
+  rotateBtn.addEventListener('click', () => {
+    autoRotate = !autoRotate;
+    rotateBtn.textContent = 'Auto Rotate: ' + (autoRotate ? 'Chalu' : 'Band');
+  });
+
+  const busBtn = document.getElementById('busBtn');
+  busBtn.addEventListener('click', () => {
+    driving = !driving;
+    busBtn.textContent = driving ? 'Bus Roko' : 'Bus Chalao';
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    camera.position.copy(startPos);
+    controls.target.set(0, 3, 0);
+    controls.update();
+  });
+
+  // ---------- Resize ----------
   window.addEventListener('resize', () => {
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(heroWrap.clientWidth, heroWrap.clientHeight);
+    renderer.setSize(innerWidth, innerHeight);
   });
 </script>
 </body>
