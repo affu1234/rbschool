@@ -1,467 +1,294 @@
+
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sri Sai Model School</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; background: #f8fafc; line-height: 1.6; }
-
-  /* Navbar */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 12px 6%; background: rgba(15,23,42,0.9); color: #fff;
-  }
-  nav .logo { font-weight: 700; font-size: 18px; }
-  nav ul { list-style: none; display: flex; gap: 22px; }
-  nav a { color: #e2e8f0; text-decoration: none; font-size: 15px; }
-  nav a:hover { color: #38bdf8; }
-
-  /* Hero with 3D building */
-  .hero { position: relative; height: 100vh; min-height: 560px; background: #bfe6ff; overflow: hidden; }
-  #wrap { position: absolute; inset: 0; }
-  .hero-title {
-    position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
-    background: rgba(15,23,42,0.75); color: #fff; padding: 12px 24px;
-    border-radius: 12px; text-align: center; z-index: 2; pointer-events: none; white-space: nowrap;
-  }
-  .hero-title h1 { font-size: clamp(20px, 4vw, 34px); }
-  .hero-title p { font-size: 14px; opacity: 0.85; }
-  .hero-btns {
-    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 10px; z-index: 2; flex-wrap: wrap; justify-content: center;
-  }
-  .hero-btns a, .hero-btns button {
-    padding: 11px 20px; border: none; border-radius: 999px; cursor: pointer;
-    background: #0284c7; color: #fff; font-weight: 600; font-size: 14px; text-decoration: none;
-  }
-  .hero-btns button:hover, .hero-btns a:hover { background: #0369a1; }
-
-  /* Sections */
-  section { padding: 70px 6%; }
-  section h2 { text-align: center; font-size: 32px; margin-bottom: 10px; color: #0f172a; }
-  section .sub { text-align: center; color: #64748b; margin-bottom: 36px; }
-
-  .about { background: #fff; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-  .stat { text-align: center; padding: 26px; border-radius: 14px; background: #f1f5f9; }
-  .stat strong { display: block; font-size: 34px; color: #0284c7; }
-
-  /* Gallery */
-  .gallery { background: #f1f5f9; }
-  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-  .gallery-grid img {
-    width: 100%; height: 220px; object-fit: cover; border-radius: 12px; cursor: pointer;
-    box-shadow: 0 4px 14px rgba(15,23,42,0.12); transition: transform 0.25s; background: #cbd5e1;
-  }
-  .gallery-grid img:hover { transform: scale(1.03); }
-  .lightbox {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
-    z-index: 20; align-items: center; justify-content: center;
-  }
-  .lightbox.open { display: flex; }
-  .lightbox img { max-width: 92%; max-height: 88%; border-radius: 10px; }
-  .lightbox .close {
-    position: absolute; top: 18px; right: 26px; color: #fff; font-size: 40px; cursor: pointer;
-  }
-
-  /* Admission */
-  .admission { background: #fff; }
-  .admission-wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto; }
-  .steps { list-style: none; counter-reset: s; }
-  .steps li {
-    counter-increment: s; background: #f1f5f9; padding: 14px 16px 14px 60px;
-    border-radius: 12px; margin-bottom: 12px; position: relative; font-size: 15px;
-  }
-  .steps li::before {
-    content: counter(s); position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    width: 30px; height: 30px; border-radius: 50%; background: #0284c7; color: #fff;
-    display: flex; align-items: center; justify-content: center; font-weight: 700;
-  }
-  form { display: flex; flex-direction: column; gap: 12px; }
-  input, select, textarea {
-    padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 15px; font-family: inherit;
-  }
-  form button {
-    padding: 12px; border: none; border-radius: 10px; background: #0284c7; color: #fff;
-    font-weight: 700; font-size: 16px; cursor: pointer;
-  }
-  form button:hover { background: #0369a1; }
-
-  /* Contact */
-  .contact { background: #0f172a; color: #e2e8f0; }
-  .contact h2 { color: #fff; }
-  .contact .sub { color: #94a3b8; }
-  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; max-width: 900px; margin: 0 auto; }
-  .contact-box { background: #1e293b; padding: 24px; border-radius: 14px; text-align: center; }
-  .contact-box h3 { color: #38bdf8; margin-bottom: 6px; }
-  .map { max-width: 900px; height: 280px; margin: 30px auto 0; border: 0; border-radius: 14px; width: 100%; display: block; }
-
-  footer { background: #020617; color: #64748b; text-align: center; padding: 18px; font-size: 14px; }
-
-  @media (max-width: 680px) {
-    nav ul { display: none; }
-    section { padding: 50px 5%; }
-  }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f9ff;
+  color: #142b4a;
+}
+nav {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 7%;
+  background:white;
+}
+nav a {text-decoration:none;color:#142b4a;margin:10px}
+.hero {
+  padding:65px 7%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  align-items:center;
+  background:linear-gradient(120deg,#e4f1ff,#fff);
+}
+h1 {font-size:55px;margin:15px 0}
+h1 span {color:#2563a6}
+p {line-height:1.7;color:#64748b}
+.btn {
+  display:inline-block;
+  padding:14px 22px;
+  background:#2563a6;
+  color:white;
+  text-decoration:none;
+  border-radius:8px;
+  margin-top:15px;
+  border:0;
+  cursor:pointer;
+}
+#campus {
+  width:100%;
+  height:430px;
+  border-radius:20px;
+  display:block;
+}
+section {padding:65px 7%}
+.cards {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.card {
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 8px 25px #0000000d;
+}
+footer {
+  background:#142b4a;
+  color:white;
+  padding:30px;
+  text-align:center;
+}
+@media(max-width:750px) {
+ .hero {grid-template-columns:1fr}
+ h1 {font-size:40px}
+ .cards {grid-template-columns:1fr}
+ #campus {height:320px}
+ nav a {display:none}
+}
 </style>
 </head>
+
 <body>
 
 <nav>
-  <div class="logo">Sri Sai Model School</div>
-  <ul>
-    <li><a href="#about">Parichay</a></li>
-    <li><a href="#gallery">Photos</a></li>
-    <li><a href="#admission">Admission</a></li>
-    <li><a href="#contact">Sampark</a></li>
-  </ul>
+  <strong>SRI SAI MODEL SCHOOL</strong>
+  <div>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#admission">Admission</a>
+    <a href="#contact">Contact</a>
+  </div>
 </nav>
 
-<!-- HERO: 3D building -->
-<header class="hero">
-  <div id="wrap"></div>
-  <div class="hero-title">
-    <h1>Sri Sai Model School</h1>
-    <p>Mouse drag: ghumayein &bull; Scroll: zoom karein</p>
-  </div>
-  <div class="hero-btns">
-    <button id="rotateBtn">Auto Rotate: Band</button>
-    <button id="busBtn">Bus Chalao</button>
-    <button id="resetBtn">Reset View</button>
-    <a href="#admission">Admission Puchhein</a>
-  </div>
-</header>
+<section class="hero" id="home">
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <h2>Hamare Bare Mein</h2>
-  <p class="sub">Bacchon ki shiksha aur vikas mein samarpit</p>
-  <div class="stats">
-    <div class="stat"><strong>Nursery - 10</strong>Kakshayein</div>
-    <div class="stat"><strong>Smart</strong>Classrooms</div>
-    <div class="stat"><strong>Anubhavi</strong>Shikshak</div>
-    <div class="stat"><strong>Safe</strong>School Bus</div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section class="gallery" id="gallery">
-  <h2>Photo Gallery</h2>
-  <p class="sub">School ki kuch jhalkiyan</p>
-  <div class="gallery-grid">
-    <img src="photos/1.jpg" alt="School photo 1" onerror="this.src='https://placehold.co/600x400?text=Photo+1'">
-    <img src="photos/2.jpg" alt="School photo 2" onerror="this.src='https://placehold.co/600x400?text=Photo+2'">
-    <img src="photos/3.jpg" alt="School photo 3" onerror="this.src='https://placehold.co/600x400?text=Photo+3'">
-    <img src="photos/4.jpg" alt="School photo 4" onerror="this.src='https://placehold.co/600x400?text=Photo+4'">
-    <img src="photos/5.jpg" alt="School photo 5" onerror="this.src='https://placehold.co/600x400?text=Photo+5'">
-    <img src="photos/6.jpg" alt="School photo 6" onerror="this.src='https://placehold.co/600x400?text=Photo+6'">
-  </div>
-</section>
-
-<div class="lightbox" id="lightbox">
-  <span class="close" id="closeBox">&times;</span>
-  <img id="lightboxImg" src="" alt="">
+<div>
+  <h4>WELCOME TO SRI SAI MODEL SCHOOL</h4>
+  <h1>Building <span>Bright</span> Futures.</h1>
+  <p>
+    Every child deserves a great education.
+    Discover a place where students learn,
+    grow and achieve their dreams.
+  </p>
+  <a class="btn" href="#admission">Apply For Admission</a>
 </div>
 
-<!-- ADMISSION -->
-<section class="admission" id="admission">
-  <h2>Admission</h2>
-  <p class="sub">Admission ki prakriya aasaan hai</p>
-  <div class="admission-wrap">
-    <div>
-      <ol class="steps">
-        <li>Online ya school office mein form bharein</li>
-        <li>Document verification (janm praman patra, address proof, photo)</li>
-        <li>Bache ka interaction aur test</li>
-        <li>Fees jama karke admission confirm karein</li>
-      </ol>
+<div style="background:#cce5ff;border-radius:20px;overflow:hidden">
+  <canvas id="campus"></canvas>
+</div>
+
+</section>
+
+<section id="about">
+  <h1 style="font-size:35px;text-align:center">About Our School</h1>
+  <p style="text-align:center">
+    Sri Sai Model School provides a welcoming
+    environment for learning and development.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h2>📚 Education</h2>
+      <p>Building strong foundations through learning.</p>
     </div>
-    <div>
-      <form id="admissionForm">
-        <input type="text" id="sName" placeholder="Bache ka naam" required>
-        <input type="text" id="pName" placeholder="Pita / Mata ka naam" required>
-        <input type="tel" id="phone" placeholder="Mobile number" required>
-        <select id="cls" required>
-          <option value="">Class chunein</option>
-          <option>Nursery</option><option>LKG</option><option>UKG</option>
-          <option>Class 1 - 5</option><option>Class 6 - 8</option><option>Class 9 - 10</option>
-        </select>
-        <textarea id="msg" rows="3" placeholder="Koi sawal ya sandesh (optional)"></textarea>
-        <button type="submit">Admission Form Bhejein</button>
-      </form>
+    <div class="card">
+      <h2>🌟 Development</h2>
+      <p>Encouraging creativity and confidence.</p>
+    </div>
+    <div class="card">
+      <h2>🏫 Campus</h2>
+      <p>A place to learn, explore and grow.</p>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <h2>Sampark Karein</h2>
-  <p class="sub">Kisi bhi jaankari ke liye hamse judein</p>
-  <div class="contact-grid">
-    <div class="contact-box"><h3>Pata</h3><p>Yahan school ka poora address likhein</p></div>
-    <div class="contact-box"><h3>Phone</h3><p><a href="tel:+910000000000" style="color:#e2e8f0">+91 00000 00000</a></p></div>
-    <div class="contact-box"><h3>Email</h3><p>info@srisaischool.edu</p></div>
-    <div class="contact-box"><h3>Samay</h3><p>Somvar se Shanivar<br>Subah 8:00 - Shaam 2:00</p></div>
+<section id="admission" style="background:#e5f1ff;text-align:center">
+  <h1 style="font-size:35px">Admissions Open</h1>
+  <p>Give your child a brighter future.</p>
+  <a class="btn" href="#contact">Enquire Now</a>
+</section>
+
+<section id="contact">
+  <h1 style="font-size:35px;text-align:center">Contact Us</h1>
+  <div class="cards">
+    <div class="card">
+      <h3>📍 Address</h3>
+      <p>ADD SCHOOL ADDRESS</p>
+    </div>
+    <div class="card">
+      <h3>📞 Phone</h3>
+      <p>ADD PHONE NUMBER</p>
+    </div>
+    <div class="card">
+      <h3>✉️ Email</h3>
+      <p>ADD SCHOOL EMAIL</p>
+    </div>
   </div>
 </section>
 
-<footer>&copy; 2026 Sri Sai Model School. Sabhi adhikar surakshit.</footer>
+<footer>
+  <h3>SRI SAI MODEL SCHOOL</h3>
+  <p>Learn • Grow • Succeed</p>
+</footer>
 
-<!-- Three.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script type="module">
+import * as THREE from
+'https://unpkg.com/three@0.160.0/build/three.module.js';
 
-<script>
-  // ---------- 3D Scene ----------
-  const wrap = document.getElementById('wrap');
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xbfe6ff);
+import { OrbitControls } from
+'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
-  const camera = new THREE.PerspectiveCamera(50, innerWidth / wrap.clientHeight, 0.1, 500);
-  const startPos = new THREE.Vector3(14, 7, 18);
-  camera.position.copy(startPos);
+const canvas = document.querySelector("#campus");
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(innerWidth, wrap.clientHeight);
-  renderer.shadowMap.enabled = true;
-  wrap.appendChild(renderer.domElement);
+const renderer = new THREE.WebGLRenderer({
+  canvas,
+  antialias:true
+});
 
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.target.set(0, 3, 0);
-  controls.maxPolarAngle = Math.PI / 2 - 0.05;
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled = true;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color("#cce5ff");
+
+const camera = new THREE.PerspectiveCamera(40,1,0.1,100);
+camera.position.set(14,10,17);
+
+const controls = new OrbitControls(camera,canvas);
+controls.enableDamping = true;
+controls.target.set(0,4,0);
+controls.minDistance = 9;
+controls.maxDistance = 28;
+
+scene.add(new THREE.HemisphereLight(0xffffff,0x8899aa,2));
+
+const light = new THREE.DirectionalLight(0xffffff,2);
+light.position.set(-8,15,10);
+light.castShadow = true;
+scene.add(light);
+
+const building = new THREE.Group();
+scene.add(building);
+
+function createBox(w,h,d,x,y,z,color) {
+  const mesh = new THREE.Mesh(
+    new THREE.BoxGeometry(w,h,d),
+    new THREE.MeshStandardMaterial({color})
+  );
+  mesh.position.set(x,y,z);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  building.add(mesh);
+}
+
+// Main building
+createBox(12,9,5,0,4.5,0,"#eeeeee");
+
+// Floors, windows and grey panels
+for(let f=0;f<4;f++) {
+  let y=1.3+f*2.05;
+
+  createBox(1.8,1.7,.12,-3.7,y,2.56,"#88858b");
+
+  for(let x of [-4.2,-1.9,1.7,4.2]) {
+    createBox(1.1,.9,.1,x,y,2.63,"#527b9d");
+  }
+
+  createBox(12.3,.15,5.3,0,.3+f*2.05,0,"#ffffff");
+}
+
+// Balconies
+for(let f=0;f<3;f++) {
+  let y=2.2+f*2.05;
+
+  createBox(3.3,.15,2.6,4.2,y,1.5,"#ffffff");
+  createBox(3.3,.12,.12,4.2,y+.5,2.8,"#ffffff");
+}
+
+// Entrance
+createBox(2.3,2.4,.2,0,1.3,2.6,"#263b50");
+
+// School sign
+const signCanvas=document.createElement("canvas");
+signCanvas.width=512;
+signCanvas.height=128;
+
+const ctx=signCanvas.getContext("2d");
+ctx.fillStyle="white";
+ctx.fillRect(0,0,512,128);
+ctx.fillStyle="#142b4a";
+ctx.font="bold 38px Arial";
+ctx.textAlign="center";
+ctx.fillText("SRI SAI MODEL SCHOOL",256,78);
+
+const texture=new THREE.CanvasTexture(signCanvas);
+
+const sign=new THREE.Mesh(
+  new THREE.PlaneGeometry(5,1.25),
+  new THREE.MeshBasicMaterial({map:texture})
+);
+
+sign.position.set(-1,7.4,2.57);
+building.add(sign);
+
+// Ground
+const ground=new THREE.Mesh(
+  new THREE.BoxGeometry(22,.3,18),
+  new THREE.MeshStandardMaterial({color:"#d5e0e5"})
+);
+ground.position.y=-.3;
+scene.add(ground);
+
+// Responsive
+function resize() {
+  const w=canvas.clientWidth;
+  const h=canvas.clientHeight;
+  renderer.setSize(w,h,false);
+  camera.aspect=w/h;
+  camera.updateProjectionMatrix();
+}
+
+new ResizeObserver(resize).observe(canvas);
+resize();
+
+function animate() {
+  requestAnimationFrame(animate);
   controls.update();
-
-  // Lights
-  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-  const sun = new THREE.DirectionalLight(0xffffff, 1.0);
-  sun.position.set(10, 20, 12);
-  sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
-  sun.shadow.camera.left = -25; sun.shadow.camera.right = 25;
-  sun.shadow.camera.top = 25; sun.shadow.camera.bottom = -25;
-  scene.add(sun);
-
-  // Box helper
-  function box(w, h, d, color, x, y, z, parent = scene, opts = {}) {
-    const mat = new THREE.MeshStandardMaterial({
-      color, roughness: opts.roughness ?? 0.8, metalness: opts.metalness ?? 0.0
-    });
-    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
-    m.position.set(x, y, z);
-    m.castShadow = true;
-    m.receiveShadow = true;
-    parent.add(m);
-    return m;
-  }
-
-  // Zameen, road, footpath
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.MeshStandardMaterial({ color: 0x84cc16 }));
-  ground.rotation.x = -Math.PI / 2;
-  ground.receiveShadow = true;
-  scene.add(ground);
-
-  const road = new THREE.Mesh(new THREE.PlaneGeometry(80, 6), new THREE.MeshStandardMaterial({ color: 0x475569 }));
-  road.rotation.x = -Math.PI / 2;
-  road.position.set(0, 0.01, 8.5);
-  road.receiveShadow = true;
-  scene.add(road);
-
-  box(80, 0.15, 1.6, 0xcbd5e1, 0, 0.08, 5.2);
-
-  // School building
-  const school = new THREE.Group();
-  scene.add(school);
-
-  const FH = 1.6, FLOORS = 4, H = FH * FLOORS;
-  const MAIN_W = 6, MAIN_D = 4.5;
-
-  box(MAIN_W, H, MAIN_D, 0xf8fafc, 0, H / 2, 0, school);
-  box(MAIN_W + 0.2, 0.25, MAIN_D + 0.2, 0xe2e8f0, 0, H + 0.12, 0, school);
-
-  // Brown panels
-  [-2.9, -0.4].forEach(x => {
-    box(0.6, H - 0.2, 0.1, 0x8b7b72, x, H / 2, MAIN_D / 2 + 0.02, school);
-  });
-
-  // Windows
-  const winXs = [-2.4, -1.4, 1.2, 2.2];
-  for (let f = 0; f < FLOORS; f++) {
-    const y = f * FH + FH / 2;
-    winXs.forEach(x => {
-      box(0.82, 0.72, 0.06, 0xffffff, x, y, MAIN_D / 2 + 0.05, school);
-      box(0.66, 0.56, 0.08, 0x1e3a5f, x, y, MAIN_D / 2 + 0.07, school, { roughness: 0.2, metalness: 0.5 });
-    });
-  }
-
-  // Logo badge
-  const logoCircle = new THREE.Mesh(
-    new THREE.CircleGeometry(0.4, 32),
-    new THREE.MeshStandardMaterial({ color: 0x38bdf8, side: THREE.DoubleSide })
-  );
-  logoCircle.position.set(-0.1, 2.4, MAIN_D / 2 + 0.1);
-  school.add(logoCircle);
-
-  // Naam ka sign
-  const signCanvas = document.createElement('canvas');
-  signCanvas.width = 1024; signCanvas.height = 200;
-  const g = signCanvas.getContext('2d');
-  g.fillStyle = '#ffffff'; g.fillRect(0, 0, 1024, 200);
-  g.fillStyle = '#111827';
-  g.font = 'bold 84px Arial';
-  g.textAlign = 'center'; g.textBaseline = 'middle';
-  g.fillText('SRI SAI MODEL SCHOOL', 512, 104);
-  const sign = new THREE.Mesh(
-    new THREE.PlaneGeometry(3.8, 0.75),
-    new THREE.MeshStandardMaterial({ map: new THREE.CanvasTexture(signCanvas) })
-  );
-  sign.position.set(-0.6, H - 0.6, MAIN_D / 2 + 0.12);
-  school.add(sign);
-
-  // Right wing (balconies)
-  const WING_X = 5.2, WING_W = 2.6;
-  box(WING_W, H, MAIN_D, 0xf1f5f9, WING_X, H / 2, 0, school);
-  box(WING_W + 0.2, 0.25, MAIN_D + 0.2, 0xe2e8f0, WING_X, H + 0.12, 0, school);
-  for (let f = 1; f < FLOORS; f++) {
-    const y = f * FH;
-    box(WING_W, 0.15, 1.0, 0xffffff, WING_X, y, MAIN_D / 2 + 0.5, school);
-    box(WING_W, 0.5, 0.04, 0x334155, WING_X, y + 0.33, MAIN_D / 2 + 0.98, school);
-    box(WING_W - 0.2, FH - 0.3, 0.1, 0x6b5b53, WING_X, y + FH / 2, MAIN_D / 2 + 0.03, school);
-  }
-
-  // Entrance portico
-  const ENTRY_Z = MAIN_D / 2 + 0.9;
-  box(2.6, 0.15, 1.6, 0x475569, 2.0, 2.2, ENTRY_Z, school);
-  box(0.15, 2.0, 0.15, 0x334155, 0.8, 1.1, ENTRY_Z + 0.6, school);
-  box(0.15, 2.0, 0.15, 0x334155, 3.2, 1.1, ENTRY_Z + 0.6, school);
-  box(2.2, 0.15, 0.5, 0xd1d5db, 2.0, 0.08, ENTRY_Z + 1.0, school);
-
-  // Gate
-  const GATE_Z = 6.2;
-  box(0.4, 1.4, 0.4, 0x1f2937, -3.5, 0.7, GATE_Z);
-  box(0.4, 1.4, 0.4, 0x1f2937, 6.5, 0.7, GATE_Z);
-  for (let x = -3.1; x < 6.2; x += 0.45) {
-    box(0.08, 1.0, 0.08, 0x111827, x, 0.5, GATE_Z);
-  }
-
-  // Hedges
-  for (let x = -2; x <= 6; x += 0.8) {
-    const h = new THREE.Mesh(new THREE.SphereGeometry(0.35, 16, 16), new THREE.MeshStandardMaterial({ color: 0x166534 }));
-    h.position.set(x, 0.3, 5.0);
-    h.castShadow = true;
-    scene.add(h);
-  }
-
-  // Trees
-  function tree(x, z, s = 1) {
-    box(0.3 * s, 2 * s, 0.3 * s, 0x78350f, x, s, z);
-    const crown = new THREE.Mesh(new THREE.SphereGeometry(1.4 * s, 20, 20), new THREE.MeshStandardMaterial({ color: 0x15803d }));
-    crown.position.set(x, 2.8 * s, z);
-    crown.castShadow = true;
-    scene.add(crown);
-  }
-  tree(-9, 2, 1.2);
-  tree(-12, -2, 1.0);
-  tree(12, 1, 1.1);
-  tree(15, -3, 1.3);
-
-  // School bus
-  const bus = new THREE.Group();
-  const yellow = new THREE.MeshStandardMaterial({ color: 0xfacc15 });
-  const dark = new THREE.MeshStandardMaterial({ color: 0x1e293b });
-
-  const busBody = new THREE.Mesh(new THREE.BoxGeometry(3.2, 1.2, 1.4), yellow);
-  busBody.position.set(0, 0.85, 0);
-  busBody.castShadow = true;
-  bus.add(busBody);
-
-  const busWindows = new THREE.Mesh(new THREE.BoxGeometry(2.9, 0.4, 1.45), dark);
-  busWindows.position.set(0, 1.3, 0);
-  bus.add(busWindows);
-
-  [-1.1, -0.1, 0.9].forEach(x => {
-    const w = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.4, 1.46), yellow);
-    w.position.set(x, 1.3, 0);
-    bus.add(w);
-  });
-
-  [-1.0, 1.0].forEach(x => {
-    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.25, 16), dark);
-    wheel.rotation.x = Math.PI / 2;
-    wheel.position.set(x, 0.28, 0.75);
-    wheel.castShadow = true;
-    bus.add(wheel);
-    const wheel2 = wheel.clone();
-    wheel2.position.z = -0.75;
-    bus.add(wheel2);
-  });
-
-  bus.position.set(-2, 0, 8.5);
-  bus.rotation.y = Math.PI / 2;
-  scene.add(bus);
-
-  // Animation
-  let driving = false, autoRotate = false;
-  controls.autoRotateSpeed = 1.0;
-
-  function animate() {
-    requestAnimationFrame(animate);
-    if (driving) {
-      bus.position.x += 0.04;
-      if (bus.position.x > 25) bus.position.x = -25;
-    }
-    controls.autoRotate = autoRotate;
-    controls.update();
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // Buttons
-  const rotateBtn = document.getElementById('rotateBtn');
-  rotateBtn.addEventListener('click', () => {
-    autoRotate = !autoRotate;
-    rotateBtn.textContent = 'Auto Rotate: ' + (autoRotate ? 'Chalu' : 'Band');
-  });
-
-  const busBtn = document.getElementById('busBtn');
-  busBtn.addEventListener('click', () => {
-    driving = !driving;
-    busBtn.textContent = driving ? 'Bus Roko' : 'Bus Chalao';
-  });
-
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    camera.position.copy(startPos);
-    controls.target.set(0, 3, 0);
-    controls.update();
-  });
-
-  window.addEventListener('resize', () => {
-    camera.aspect = innerWidth / wrap.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(innerWidth, wrap.clientHeight);
-  });
-
-  // ---------- Gallery lightbox ----------
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightboxImg');
-  document.querySelectorAll('.gallery-grid img').forEach(img => {
-    img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightbox.classList.add('open');
-    });
-  });
-  lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
-
-  // ---------- Admission form ----------
-  document.getElementById('admissionForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Dhanyavaad! Aapka admission form mil gaya hai. School jald hi sampark karega.');
-    e.target.reset();
-  });
+  renderer.render(scene,camera);
+}
+animate();
 </script>
+
 </body>
 </html>
