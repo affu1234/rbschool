@@ -2,821 +2,1057 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sri Sai Model School</title>
-<meta name="description" content="Sri Sai Model School — Learn, Grow and Succeed. A place where young minds discover their potential and build a brighter future.">
-
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
-
-<style>
-:root {
-  --navy: #102b4e;
-  --gold: #f2bd4b;
-  --cream: #f7f5ef;
-  --muted: #657487;
-}
-
-* { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  margin: 0;
-  font-family: "DM Sans", sans-serif;
-  color: #172638;
-}
-
-h1,h2,h3 { font-family: Manrope, sans-serif; }
-
-a { text-decoration: none; color: inherit; }
-
-.topline {
-  background: var(--navy);
-  color: white;
-  padding: 10px 6%;
-  font-size: 12px;
-  display: flex;
-  justify-content: space-between;
-}
-
-header {
-  padding: 18px 6%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: 0 5px 20px #102b4e12;
-}
-
-.brand {
-  font-family: Manrope;
-  font-weight: 800;
-  color: var(--navy);
-  font-size: 17px;
-}
-
-.logo {
-  display: inline-grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  background: var(--navy);
-  color: var(--gold);
-  border-radius: 10px;
-  margin-right: 8px;
-}
-
-nav {
-  display: flex;
-  gap: 22px;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-nav a:hover { color: #bd881e; }
-
-.btn {
-  background: var(--gold);
-  color: var(--navy);
-  padding: 13px 20px;
-  border-radius: 8px;
-  display: inline-block;
-  font-weight: 800;
-  font-size: 13px;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-dark {
-  background: var(--navy);
-  color: white;
-}
-
-.hero {
-  background: linear-gradient(120deg,#f8f6f0,#e8eff5);
-  padding: 75px 6%;
-}
-
-.hero-grid {
-  max-width: 1200px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 35px;
-  align-items: center;
-}
-
-.eyebrow {
-  color: #a87918;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-h1 {
-  font-size: clamp(38px,5vw,64px);
-  line-height: 1.1;
-  color: var(--navy);
-  letter-spacing: -2px;
-}
-
-h1 span { color: #c58b17; }
-
-.hero p {
-  color: var(--muted);
-  line-height: 1.9;
-  font-size: 15px;
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 25px;
-  flex-wrap: wrap;
-}
-
-/* 3D SCHOOL */
-
-.campus {
-  background: #e5edf2;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 20px 50px #102b4e20;
-}
-
-#campus3d {
-  width: 100%;
-  height: 370px;
-  display: block;
-  cursor: grab;
-}
-
-.model-tag {
-  position: absolute;
-  bottom: 15px;
-  left: 15px;
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: bold;
-}
-
-/* SCHOOL BUS ANIMATION */
-
-.bus-road {
-  height: 75px;
-  background: #263548;
-  position: relative;
-  overflow: hidden;
-  border-block: 5px solid #cbd3d9;
-}
-
-.road-line {
-  position: absolute;
-  top: 32px;
-  width: 100%;
-  border-top: 3px dashed white;
-}
-
-.bus {
-  position: absolute;
-  top: 8px;
-  left: -250px;
-  width: 220px;
-  height: 50px;
-  animation: drive 9s linear infinite;
-}
-
-.bus-body {
-  width: 190px;
-  height: 37px;
-  background: #f4bd45;
-  border: 2px solid #d99b22;
-  border-radius: 9px;
-  position: absolute;
-  top: 3px;
-}
-
-.bus-body:before {
-  content: "SRI SAI MODEL SCHOOL";
-  position: absolute;
-  left: 8px;
-  top: 11px;
-  font-size: 9px;
-  font-weight: 900;
-  color: #183452;
-}
-
-.bus-body:after {
-  content: "";
-  position: absolute;
-  right: 8px;
-  top: 5px;
-  width: 25px;
-  height: 18px;
-  background: #b9d5e5;
-  border: 2px solid white;
-}
-
-.wheel {
-  position: absolute;
-  bottom: 0;
-  width: 18px;
-  height: 18px;
-  background: #182536;
-  border: 4px solid #aeb9c1;
-  border-radius: 50%;
-}
-
-.wheel.one { left: 25px; }
-.wheel.two { left: 150px; }
-
-@keyframes drive {
-  to { transform: translateX(calc(100vw + 300px)); }
-}
-
-/* CONTENT */
-
-section { padding: 80px 6%; }
-
-.inner {
-  max-width: 1100px;
-  margin: auto;
-}
-
-.section-heading {
-  text-align: center;
-  max-width: 650px;
-  margin: 0 auto 40px;
-}
-
-.section-heading h2 {
-  font-size: 36px;
-  color: var(--navy);
-}
-
-.section-heading p {
-  color: var(--muted);
-  line-height: 1.8;
-  font-size: 14px;
-}
-
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 45px;
-  align-items: center;
-}
-
-.about-panel {
-  background: var(--cream);
-  padding: 32px;
-  border-radius: 17px;
-}
-
-.about-panel h3 {
-  color: var(--navy);
-  font-size: 24px;
-}
-
-.about-panel p,
-.about-text {
-  color: var(--muted);
-  line-height: 1.9;
-  font-size: 14px;
-}
-
-.values {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.value {
-  background: white;
-  padding: 14px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: bold;
-  color: var(--navy);
-}
-
-.features { background: #f7f8fa; }
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 18px;
-}
-
-.feature {
-  background: white;
-  border: 1px solid #e8edf1;
-  padding: 25px;
-  border-radius: 14px;
-}
-
-.feature h3 { color: var(--navy); }
-
-.feature p {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-.icon {
-  font-size: 25px;
-  background: #fff3d6;
-  width: 45px;
-  height: 45px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-}
-
-/* ADMISSIONS */
-
-.admission {
-  background: var(--navy);
-  color: white;
-}
-
-.admission .section-heading h2 { color: white; }
-
-.admission .section-heading p { color: #c4d0dc; }
-
-.form-box {
-  background: white;
-  color: #172638;
-  max-width: 760px;
-  margin: auto;
-  padding: 30px;
-  border-radius: 16px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-label {
-  display: block;
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 7px;
-  color: #526276;
-}
-
-input,select,textarea {
-  width: 100%;
-  padding: 13px;
-  border: 1px solid #dce3e9;
-  border-radius: 8px;
-  font: 13px "DM Sans";
-}
-
-textarea {
-  min-height: 90px;
-  resize: vertical;
-}
-
-.wide { grid-column: 1 / -1; }
-
-.submit { width: 100%; }
-
-/* CONTACT */
-
-.contacts {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 15px;
-}
-
-.contact {
-  background: var(--cream);
-  padding: 23px;
-  border-radius: 12px;
-}
-
-.contact h3 { color: var(--navy); }
-
-.contact p {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-footer {
-  background: #0b2039;
-  color: white;
-  padding: 25px 6%;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-size: 12px;
-}
-
-@media(max-width:800px) {
-  nav { display: none; }
-  .hero-grid,.about-grid { grid-template-columns: 1fr; }
-  .cards,.contacts { grid-template-columns: 1fr; }
-  #campus3d { height: 300px; }
-  .form-box { grid-template-columns: 1fr; padding: 20px; }
-  .wide { grid-column: auto; }
-  section { padding: 55px 5%; }
-}
-
-@media(prefers-reduced-motion:reduce) {
-  .bus { animation: none; left: 30%; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102a43">
+  <title>Sri Sai Model School | Learn, Grow & Shine</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --navy: #102a43;
+      --blue: #183f60;
+      --gold: #f4bd45;
+      --cream: #fffaf0;
+      --white: #ffffff;
+      --text: #263746;
+      --muted: #667786;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1120px, 90%);
+      margin: auto;
+    }
+
+    /* BUS INTRO ANIMATION */
+
+    .intro {
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      animation: introHide 1s ease 4s forwards;
+    }
+
+    .road {
+      position: absolute;
+      bottom: 18%;
+      width: 100%;
+      height: 5px;
+      background: rgba(255,255,255,.4);
+    }
+
+    .bus {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      left: -480px;
+      bottom: 19%;
+      background: var(--gold);
+      border-radius: 15px 15px 8px 8px;
+      width: 410px;
+      height: 115px;
+      padding: 15px;
+      box-shadow: 0 15px 35px rgba(0,0,0,.25);
+      animation: busMove 3.5s cubic-bezier(.4,0,.2,1) forwards;
+    }
+
+    .bus-windows {
+      display: flex;
+      gap: 7px;
+      margin-right: 12px;
+    }
+
+    .bus-windows span {
+      width: 45px;
+      height: 35px;
+      border-radius: 5px;
+      background: #dcecf2;
+      border: 3px solid var(--navy);
+    }
+
+    .bus-name {
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.3;
+      text-align: center;
+    }
+
+    .wheel {
+      position: absolute;
+      bottom: -16px;
+      width: 34px;
+      height: 34px;
+      border: 7px solid #202a33;
+      background: #aeb6bd;
+      border-radius: 50%;
+    }
+
+    .wheel.one { left: 65px; }
+    .wheel.two { right: 65px; }
+
+    .intro-title {
+      position: absolute;
+      top: 25%;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 5vw, 48px);
+      padding: 0 15px;
+    }
+
+    @keyframes busMove {
+      0% { left: -480px; }
+      70% { left: calc(50% - 205px); }
+      100% { left: calc(100% + 30px); }
+    }
+
+    @keyframes introHide {
+      to {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+    }
+
+    /* NAVBAR */
+
+    header {
+      background: var(--white);
+      box-shadow: 0 3px 18px rgba(0,0,0,.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav {
+      min-height: 78px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 13px;
+      background: var(--navy);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .logo-text strong {
+      display: block;
+      color: var(--navy);
+      font-size: 16px;
+    }
+
+    .logo-text small {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: #bd861b;
+    }
+
+    .nav-btn {
+      background: var(--navy);
+      color: white !important;
+      padding: 12px 19px;
+      border-radius: 8px;
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 75px 0;
+      background:
+        radial-gradient(circle at 90% 10%, rgba(244,189,69,.18), transparent 30%),
+        var(--cream);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #fff0ca;
+      color: #916411;
+      padding: 9px 15px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    h1, h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--navy);
+    }
+
+    h1 {
+      font-size: clamp(38px, 5vw, 60px);
+      line-height: 1.12;
+      margin-bottom: 22px;
+    }
+
+    h1 span {
+      color: #c58c24;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 16px;
+      margin-bottom: 28px;
+    }
+
+    .primary-btn {
+      display: inline-block;
+      padding: 15px 25px;
+      background: var(--navy);
+      color: white;
+      border-radius: 9px;
+      font-weight: 700;
+      transition: .3s;
+    }
+
+    .primary-btn:hover {
+      background: #245276;
+      transform: translateY(-3px);
+    }
+
+    .secondary-btn {
+      display: inline-block;
+      padding: 14px 22px;
+      border: 1px solid var(--navy);
+      color: var(--navy);
+      border-radius: 9px;
+      font-weight: 700;
+      margin-left: 10px;
+    }
+
+    /* NORMAL SCHOOL PHOTO - NO 3D MODEL */
+
+    .campus {
+      position: relative;
+      padding: 12px;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 20px 55px rgba(16,42,67,.13);
+    }
+
+    .school-photo {
+      width: 100%;
+      height: 390px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 15px;
+    }
+
+    .photo-caption {
+      position: absolute;
+      left: 28px;
+      bottom: 28px;
+      background: rgba(16,42,67,.92);
+      color: white;
+      padding: 13px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* ABOUT */
+
+    section {
+      padding: 85px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 45px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(30px, 4vw, 42px);
+      margin-bottom: 15px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .about-text h2 {
+      font-size: 38px;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 15px;
+    }
+
+    .about-highlight {
+      background: #fff0ca;
+      padding: 25px;
+      border-left: 4px solid var(--gold);
+      border-radius: 10px;
+      color: var(--navy);
+      font-weight: 700;
+      line-height: 1.7;
+      margin-top: 20px;
+    }
+
+    .about-visual {
+      background: var(--navy);
+      border-radius: 20px;
+      padding: 40px;
+      color: white;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-visual .symbol {
+      color: var(--gold);
+      font-size: 45px;
+      margin-bottom: 20px;
+    }
+
+    .about-visual h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .about-visual p {
+      color: #d7e0e8;
+      line-height: 1.8;
+    }
+
+    /* FACILITIES */
+
+    .facilities {
+      background: #f2f5f7;
+    }
+
+    .facility-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .facility-card {
+      background: white;
+      border-radius: 15px;
+      padding: 28px;
+      border: 1px solid #e8edf0;
+      transition: .3s;
+    }
+
+    .facility-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 35px rgba(16,42,67,.09);
+    }
+
+    .facility-icon {
+      width: 52px;
+      height: 52px;
+      background: #fff0ca;
+      color: #986d19;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      font-size: 25px;
+      margin-bottom: 18px;
+    }
+
+    .facility-card h3 {
+      color: var(--navy);
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .facility-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* ADMISSION */
+
+    .admission-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    .admission-info h2 {
+      font-size: 40px;
+      margin-bottom: 18px;
+    }
+
+    .admission-info p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .admission-info ul {
+      list-style: none;
+    }
+
+    .admission-info li {
+      margin: 13px 0;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .admission-info li::before {
+      content: "✓";
+      color: #b17a12;
+      margin-right: 10px;
+      font-weight: 800;
+    }
+
+    .form-card {
+      background: white;
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow: 0 15px 45px rgba(16,42,67,.08);
+    }
+
+    .form-card h3 {
+      color: var(--navy);
+      font-size: 23px;
+      margin-bottom: 22px;
+    }
+
+    .form-group {
+      margin-bottom: 17px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--navy);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #dce3e8;
+      border-radius: 8px;
+      outline: none;
+      font: inherit;
+      background: #fcfdfe;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #c58c24;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 95px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .form-note {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* CONTACT */
+
+    .contact {
+      background: var(--navy);
+      color: white;
+    }
+
+    .contact .section-heading h2 {
+      color: white;
+    }
+
+    .contact .section-heading p {
+      color: #c7d3dd;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .contact-card {
+      padding: 25px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 13px;
+      text-align: center;
+    }
+
+    .contact-card .facility-icon {
+      margin: 0 auto 15px;
+    }
+
+    .contact-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .contact-card p {
+      color: #d0dbe3;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: #0a1c2b;
+      color: #b9c5cf;
+      text-align: center;
+      padding: 25px 15px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    footer strong {
+      color: var(--gold);
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+      .hero-grid,
+      .about-grid,
+      .admission-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .hero {
+        padding: 55px 0;
+      }
+
+      .school-photo {
+        height: 300px;
+      }
+
+      .facility-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-links {
+        gap: 12px;
+        font-size: 12px;
+      }
+
+      .nav-links a:not(.nav-btn) {
+        display: none;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .facility-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .secondary-btn {
+        margin: 12px 0 0;
+      }
+
+      .form-card {
+        padding: 23px;
+      }
+
+      .bus {
+        transform: scale(.8);
+        transform-origin: left bottom;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .intro, .bus {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="topline">
-  <span>✦ A place to learn, grow and shine</span>
-  <span>Admissions Enquiry · Sri Sai Model School</span>
-</div>
+  <!-- INTRO BUS ANIMATION -->
+  <div class="intro">
+    <h2 class="intro-title">Welcome to Sri Sai Model School</h2>
+    <div class="road"></div>
 
-<header>
-  <a class="brand" href="#home"><span class="logo">✦</span>SRI SAI MODEL SCHOOL</a>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#facilities">Facilities</a>
-    <a href="#admissions">Admissions</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <a class="btn" href="#admissions">Enquire Now ↗</a>
-</header>
+    <div class="bus">
+      <div class="bus-windows">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
 
-<main>
+      <div class="bus-name">
+        SRI SAI<br>MODEL SCHOOL
+      </div>
 
-<section class="hero" id="home">
-<div class="hero-grid">
-
-<div>
-  <div class="eyebrow">Welcome to Sri Sai Model School</div>
-  <h1>Learning today.<br><span>Leading tomorrow.</span></h1>
-
-  <p>
-    At Sri Sai Model School, every child is encouraged to explore,
-    ask questions and discover their potential. We believe education
-    is more than lessons in a classroom — it is the foundation for
-    confidence, character and a brighter future.
-  </p>
-
-  <div class="actions">
-    <a class="btn btn-dark" href="#about">Discover Our School</a>
-    <a class="btn" href="#admissions">Admission Enquiry</a>
-  </div>
-</div>
-
-<div class="campus">
-  <canvas id="campus3d"></canvas>
-  <div class="model-tag">↔ Drag to rotate · Scroll to zoom</div>
-</div>
-
-</div>
-</section>
-
-<div class="bus-road">
-  <div class="road-line"></div>
-  <div class="bus">
-    <div class="bus-body"></div>
-    <i class="wheel one"></i>
-    <i class="wheel two"></i>
-  </div>
-</div>
-
-<section id="about">
-<div class="inner about-grid">
-
-<div class="about-panel">
-  <div class="eyebrow">Our philosophy</div>
-  <h3>Education with purpose and care.</h3>
-  <p>
-    We aim to create a positive learning atmosphere where students
-    are inspired to develop knowledge, discipline, creativity and
-    respect. Our goal is to help every learner build the skills and
-    confidence to take on tomorrow's opportunities.
-  </p>
-
-  <div class="values">
-    <div class="value">✦ Knowledge</div>
-    <div class="value">✦ Confidence</div>
-    <div class="value">✦ Discipline</div>
-    <div class="value">✦ Values</div>
-  </div>
-</div>
-
-<div>
-  <div class="eyebrow">A brighter beginning</div>
-  <h2 style="color:#102b4e;font-size:34px">
-    A school experience that helps children flourish.
-  </h2>
-  <p class="about-text">
-    Every student has a unique spark. We want to nurture that spark
-    through thoughtful teaching, encouragement and opportunities
-    to learn both inside and beyond the classroom. Together, we work
-    towards a future built on curiosity, kindness and achievement.
-  </p>
-  <a class="btn btn-dark" href="#contact">Get in Touch</a>
-</div>
-
-</div>
-</section>
-
-<section class="features" id="facilities">
-<div class="inner">
-<div class="section-heading">
-  <div class="eyebrow">The school experience</div>
-  <h2>Growing minds, strong values</h2>
-  <p>
-    We focus on the essentials that make a meaningful school journey:
-    learning, personal growth and a caring school community.
-  </p>
-</div>
-
-<div class="cards">
-  <article class="feature">
-    <div class="icon">📘</div>
-    <h3>Learning First</h3>
-    <p>Encouraging curiosity, understanding and a strong foundation in everyday learning.</p>
-  </article>
-
-  <article class="feature">
-    <div class="icon">🌱</div>
-    <h3>All-Round Growth</h3>
-    <p>Helping students develop confidence, communication, creativity and responsibility.</p>
-  </article>
-
-  <article class="feature">
-    <div class="icon">🤝</div>
-    <h3>Positive Values</h3>
-    <p>Promoting respect, kindness, discipline and a sense of belonging in the school community.</p>
-  </article>
-</div>
-</div>
-</section>
-
-<section class="admission" id="admissions">
-<div class="inner">
-
-<div class="section-heading">
-  <div class="eyebrow" style="color:#f2bd4b">Join our school community</div>
-  <h2>Begin your child's learning journey</h2>
-  <p>
-    Interested in Sri Sai Model School? Send an enquiry and our
-    school team can get in touch with you.
-  </p>
-</div>
-
-<form class="form-box" id="enquiryForm">
-
-<div>
-  <label>Parent / Guardian Name</label>
-  <input name="parent" required placeholder="Your full name">
-</div>
-
-<div>
-  <label>Contact Number</label>
-  <input name="phone" type="tel" required placeholder="Your phone number">
-</div>
-
-<div>
-  <label>Student Name</label>
-  <input name="student" required placeholder="Student's full name">
-</div>
-
-<div>
-  <label>Class Seeking Admission</label>
-  <select name="grade" required>
-    <option value="">Select class</option>
-    <option>Nursery</option>
-    <option>PP 1</option>
-    <option>PP 2</option>
-    <option>Class 1</option>
-    <option>Class 2</option>
-    <option>Class 3</option>
-    <option>Class 4</option>
-    <option>Class 5</option>
-    <option>Class 6</option>
-    <option>Class 7</option>
-    <option>Class 8</option>
-    <option>Class 9</option>
-    <option>Class 10</option>
-  </select>
-</div>
-
-<div class="wide">
-  <label>Message (optional)</label>
-  <textarea name="message" placeholder="Any question or preferred time to contact you?"></textarea>
-</div>
-
-<div class="wide">
-  <button class="btn submit" type="submit">Submit Enquiry ↗</button>
-  <p id="formNote" style="font-size:11px;color:#788595">
-    Demo form — connect a form service before publishing to receive enquiries.
-  </p>
-</div>
-
-</form>
-</div>
-</section>
-
-<section id="contact">
-<div class="inner">
-
-<div class="section-heading">
-  <div class="eyebrow">Let's connect</div>
-  <h2>Contact Sri Sai Model School</h2>
-  <p>We would be happy to help with your questions about the school and admissions.</p>
-</div>
-
-<div class="contacts">
-  <div class="contact">
-    <small>VISIT</small>
-    <h3>School Address</h3>
-    <p>Add the school's complete address here.</p>
+      <div class="wheel one"></div>
+      <div class="wheel two"></div>
+    </div>
   </div>
 
-  <div class="contact">
-    <small>CALL</small>
-    <h3>Phone Number</h3>
-    <p>Add the official school contact number.</p>
-  </div>
+  <!-- NAVBAR -->
+  <header>
+    <div class="container">
+      <nav>
+        <a href="#home" class="logo">
+          <div class="logo-icon">S</div>
+          <div class="logo-text">
+            <strong>SRI SAI MODEL SCHOOL</strong>
+            <small>LEARN • GROW • SHINE</small>
+          </div>
+        </a>
 
-  <div class="contact">
-    <small>CONNECT</small>
-    <h3>Office Hours</h3>
-    <p>Add the school's office hours here.</p>
-  </div>
-</div>
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#facilities">Facilities</a>
+          <a href="#contact">Contact</a>
+          <a href="#admission" class="nav-btn">Admissions</a>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-</div>
-</section>
+  <!-- HERO SECTION -->
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
 
-</main>
+        <div>
+          <span class="tag">WELCOME TO SRI SAI MODEL SCHOOL</span>
 
-<footer>
-  <span>© <span id="year"></span> Sri Sai Model School. All rights reserved.</span>
-  <span>Made with Affan</span>
-</footer>
+          <h1>
+            Building Bright Minds,
+            <span>Shaping Better Futures.</span>
+          </h1>
 
-<script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+          <p>
+            Every great journey begins with learning.
+            Discover a place where curiosity is encouraged,
+            confidence is developed and every child's potential matters.
+          </p>
 
-const canvas = document.querySelector('#campus3d');
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xe5edf2);
+          <a href="#admission" class="primary-btn">
+            Enquire for Admission →
+          </a>
 
-const camera = new THREE.PerspectiveCamera(38,1,0.1,100);
-camera.position.set(8,6,11);
+          <a href="#about" class="secondary-btn">
+            Explore More
+          </a>
+        </div>
 
-const renderer = new THREE.WebGLRenderer({
-  canvas,
-  antialias:true
-});
+        <!-- NORMAL SCHOOL PHOTO -->
+        <div class="campus">
+          <img
+            src="school-photo.jpg"
+            alt="Sri Sai Model School Building"
+            class="school-photo"
+          >
 
-renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-renderer.shadowMap.enabled = true;
-renderer.outputColorSpace = THREE.SRGBColorSpace;
+          <div class="photo-caption">
+            Sri Sai Model School
+          </div>
+        </div>
 
-const controls = new OrbitControls(camera,renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.06;
-controls.minDistance = 7;
-controls.maxDistance = 19;
-controls.maxPolarAngle = Math.PI * 0.48;
-controls.target.set(0,1.6,0);
+      </div>
+    </section>
 
-scene.add(new THREE.HemisphereLight(0xffffff,0x9aabb9,2.1));
+    <!-- ABOUT SECTION -->
+    <section id="about">
+      <div class="container about-grid">
 
-const sun = new THREE.DirectionalLight(0xffffff,2.5);
-sun.position.set(6,10,7);
-sun.castShadow = true;
-scene.add(sun);
+        <div class="about-text">
+          <span class="tag">ABOUT OUR SCHOOL</span>
 
-const material = (color) =>
-  new THREE.MeshStandardMaterial({color,roughness:0.8});
+          <h2>Education That Inspires Every Child</h2>
 
-const cream = material(0xf1e8d7);
-const white = material(0xfafafa);
-const navy = material(0x183a5d);
-const gold = material(0xe7b448);
-const glass = material(0x8db5ca);
-const grass = material(0x8fae8b);
-const concrete = material(0xb9c2c8);
+          <p>
+            At Sri Sai Model School, every child is encouraged to explore,
+            ask questions and discover their potential. We believe education
+            is more than lessons in a classroom — it is the foundation for
+            confidence, character and a brighter future.
+          </p>
 
-const building = new THREE.Group();
-scene.add(building);
+          <p>
+            Our aim is to create a positive learning environment where
+            students can grow academically, socially and personally.
+          </p>
 
-function block(w,h,d,x,y,z,m) {
-  const object = new THREE.Mesh(
-    new THREE.BoxGeometry(w,h,d),m
-  );
-  object.position.set(x,y,z);
-  object.castShadow = true;
-  object.receiveShadow = true;
-  building.add(object);
-}
+          <div class="about-highlight">
+            "Learning today, leading tomorrow."
+          </div>
+        </div>
 
-block(6.4,2.9,3.2,0,1.55,0,cream);
-block(6.55,.22,3.35,0,3.05,0,navy);
-block(6.65,.18,3.45,0,.12,0,concrete);
+        <div class="about-visual">
+          <div class="symbol">✦</div>
+          <h3>A Place to Learn and Grow</h3>
+          <p>
+            Encouraging young minds through knowledge, creativity,
+            discipline and the confidence to achieve more.
+          </p>
+        </div>
 
-block(2.15,1.35,.18,0,2.05,1.68,navy);
-block(2,1.18,.08,0,2.05,1.79,gold);
+      </div>
+    </section>
 
-for(const x of [-2.35,-1.2,1.2,2.35]) {
-  block(.72,.92,.09,x,2.05,1.67,navy);
-  block(.58,.76,.04,x,2.05,1.73,glass);
-  block(.06,.8,.04,x,2.05,1.76,white);
-}
+    <!-- FACILITIES SECTION -->
+    <section class="facilities" id="facilities">
+      <div class="container">
 
-for(const z of [-.95,.05,1.05]) {
-  block(.09,.85,.58,3.22,2,z,navy);
-  block(.04,.7,.45,3.28,2,z,glass);
-}
+        <div class="section-heading">
+          <span class="tag">SCHOOL EXPERIENCE</span>
+          <h2>Learning Beyond Classrooms</h2>
+          <p>
+            A supportive environment helps students develop the skills
+            and confidence they need for tomorrow.
+          </p>
+        </div>
 
-block(3.2,.48,.16,0,3.38,1.7,navy);
-block(2.5,.12,.65,0,.15,2.15,concrete);
-block(1.8,.12,.45,0,.08,2.65,white);
+        <div class="facility-grid">
 
-const ground = new THREE.Mesh(
-  new THREE.BoxGeometry(15,.18,12),grass
-);
-ground.position.y = -.12;
-ground.receiveShadow = true;
-scene.add(ground);
+          <div class="facility-card">
+            <div class="facility-icon">📚</div>
+            <h3>Quality Education</h3>
+            <p>
+              Building strong foundations through meaningful learning
+              and academic development.
+            </p>
+          </div>
 
-const path = new THREE.Mesh(
-  new THREE.BoxGeometry(2.3,.04,4),concrete
-);
-path.position.set(0,0,4);
-scene.add(path);
+          <div class="facility-card">
+            <div class="facility-icon">👩‍🏫</div>
+            <h3>Dedicated Teachers</h3>
+            <p>
+              Guidance and encouragement to help every student
+              discover their abilities.
+            </p>
+          </div>
 
-for(const [x,z] of [[-4,1],[4,-1],[-4,-2],[4,2]]) {
-  const trunk = new THREE.Mesh(
-    new THREE.CylinderGeometry(.12,.16,.8,8),
-    material(0x806044)
-  );
-  trunk.position.set(x,.38,z);
-  scene.add(trunk);
+          <div class="facility-card">
+            <div class="facility-icon">🏫</div>
+            <h3>Learning Environment</h3>
+            <p>
+              A welcoming atmosphere that supports curiosity,
+              focus and personal growth.
+            </p>
+          </div>
 
-  const crown = new THREE.Mesh(
-    new THREE.SphereGeometry(.62,12,10),
-    material(0x628b69)
-  );
-  crown.position.set(x,1.15,z);
-  scene.add(crown);
-}
+          <div class="facility-card">
+            <div class="facility-icon">🎨</div>
+            <h3>Creative Learning</h3>
+            <p>
+              Opportunities to think creatively, explore ideas
+              and express individual talents.
+            </p>
+          </div>
 
-function resize() {
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-  renderer.setSize(width,height,false);
-  camera.aspect = width/height;
-  camera.updateProjectionMatrix();
-}
+          <div class="facility-card">
+            <div class="facility-icon">⚽</div>
+            <h3>Overall Development</h3>
+            <p>
+              Encouraging students to develop confidence,
+              teamwork and positive habits.
+            </p>
+          </div>
 
-new ResizeObserver(resize).observe(canvas);
-resize();
+          <div class="facility-card">
+            <div class="facility-icon">🌟</div>
+            <h3>Bright Future</h3>
+            <p>
+              Preparing students with knowledge and values
+              for the opportunities ahead.
+            </p>
+          </div>
 
-function animate() {
-  requestAnimationFrame(animate);
-  controls.update();
-  renderer.render(scene,camera);
-}
-animate();
+        </div>
+      </div>
+    </section>
 
-document.querySelector('#year').textContent =
-  new Date().getFullYear();
+    <!-- ADMISSION SECTION -->
+    <section id="admission">
+      <div class="container admission-grid">
 
-document.querySelector('#enquiryForm').addEventListener('submit',e=>{
-  e.preventDefault();
-  document.querySelector('#formNote').textContent =
-    'Thanks! This demo form is not connected yet. Connect a form service to receive enquiries.';
-});
-</script>
+        <div class="admission-info">
+          <span class="tag">ADMISSIONS OPEN</span>
+
+          <h2>Give Your Child a Bright Beginning</h2>
+
+          <p>
+            Take the first step towards your child's learning journey.
+            Send an enquiry and the school team can get in touch with you.
+          </p>
+
+          <ul>
+            <li>Student-focused learning</li>
+            <li>Supportive educational environment</li>
+            <li>Focus on overall development</li>
+            <li>Opportunities to learn and grow</li>
+          </ul>
+        </div>
+
+        <div class="form-card">
+          <h3>Admission Enquiry</h3>
+
+          <!-- DEMO FORM: connect Formspree to receive submissions -->
+          <form id="admissionForm">
+
+            <div class="form-group">
+              <label for="parentName">Parent / Guardian Name</label>
+              <input
+                type="text"
+                id="parentName"
+                name="parentName"
+                placeholder="Enter your name"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="studentName">Student Name</label>
+              <input
+                type="text"
+                id="studentName"
+                name="studentName"
+                placeholder="Enter student's name"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Mobile Number</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Enter mobile number"
+                pattern="[0-9]{10}"
+                maxlength="10"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="class">Class Applying For</label>
+              <select id="class" name="class" required>
+                <option value="">Select Class</option>
+                <option>Nursery</option>
+                <option>LKG</option>
+                <option>UKG</option>
+                <option>Class 1</option>
+                <option>Class 2</option>
+                <option>Class 3</option>
+                <option>Class 4</option>
+                <option>Class 5</option>
+                <option>Class 6</option>
+                <option>Class 7</option>
+                <option>Class 8</option>
+                <option>Class 9</option>
+                <option>Class 10</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Your Message (Optional)</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Write your enquiry..."
+              ></textarea>
+            </div>
+
+            <button type="submit" class="primary-btn submit-btn">
+              Submit Enquiry →
+            </button>
+
+            <p class="form-note">
+              This form is currently a demo. Connect a form service
+              before publishing to receive real enquiries.
+            </p>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+      <div class="container">
+
+        <div class="section-heading">
+          <span class="tag">GET IN TOUCH</span>
+          <h2>We Would Love to Hear From You</h2>
+          <p>
+            Contact Sri Sai Model School for admission enquiries
+            and other information.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+
+          <div class="contact-card">
+            <div class="facility-icon">📍</div>
+            <h3>Our Location</h3>
+            <p>
+              Add official school address here
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <div class="facility-icon">📞</div>
+            <h3>Phone Number</h3>
+            <p>
+              Add official school phone number here
+            </p>
+          </div>
+
+          <div class="contact-card">
+            <div class="facility-icon">✉️</div>
+            <h3>Email</h3>
+            <p>
+              Add official school email here
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      © <span id="year"></span> Sri Sai Model School.
+      All Rights Reserved.
+    </p>
+    <p>Designed with care | <strong>Made with Affan</strong></p>
+  </footer>
+
+  <script>
+    // Current year
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    // Demo admission form
+    document.getElementById("admissionForm").addEventListener(
+      "submit",
+      function(event) {
+        event.preventDefault();
+
+        alert(
+          "Thank you for your enquiry! Please connect a form service to receive submissions."
+        );
+
+        this.reset();
+      }
+    );
+  </script>
 
 </body>
 </html>
