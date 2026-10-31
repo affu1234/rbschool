@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunrise Public School - Welcome</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1e293b; background: #f8fafc; line-height: 1.6; }
+
+  /* Navbar */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 6%; background: rgba(15,23,42,0.85); backdrop-filter: blur(8px);
+    color: #fff;
+  }
+  nav .logo { font-weight: 700; font-size: 20px; }
+  nav ul { list-style: none; display: flex; gap: 24px; }
+  nav a { color: #e2e8f0; text-decoration: none; font-size: 15px; }
+  nav a:hover { color: #38bdf8; }
+
+  /* Hero with 3D */
+  .hero {
+    position: relative; height: 100vh; min-height: 560px;
+    display: flex; align-items: center; justify-content: center;
+    background: #0f172a; color: #fff; overflow: hidden;
+  }
+  #hero-canvas { position: absolute; inset: 0; }
+  .hero-text {
+    position: relative; z-index: 2; text-align: center;
+    background: rgba(15,23,42,0.55); padding: 30px 40px; border-radius: 16px;
+    max-width: 720px; margin: 0 20px;
+  }
+  .hero-text h1 { font-size: clamp(32px, 5vw, 56px); margin-bottom: 12px; }
+  .hero-text h1 span { color: #38bdf8; }
+  .hero-text p { font-size: 18px; opacity: 0.9; margin-bottom: 24px; }
+  .btn {
+    display: inline-block; padding: 12px 28px; margin: 6px;
+    border-radius: 999px; text-decoration: none; font-weight: 600;
+    background: #38bdf8; color: #0f172a; transition: transform 0.2s;
+  }
+  .btn.outline { background: transparent; color: #fff; border: 2px solid #fff; }
+  .btn:hover { transform: translateY(-3px); }
+
+  /* Sections */
+  section { padding: 80px 6%; }
+  section h2 { text-align: center; font-size: 34px; margin-bottom: 12px; color: #0f172a; }
+  section .sub { text-align: center; color: #64748b; margin-bottom: 40px; }
+
+  .about { background: #fff; }
+  .about-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;
+  }
+  .stat {
+    text-align: center; padding: 28px; border-radius: 14px; background: #f1f5f9;
+  }
+  .stat strong { display: block; font-size: 36px; color: #0284c7; }
+
+  .cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
+  }
+  .card {
+    background: #fff; padding: 28px; border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(15,23,42,0.08);
+    border-top: 4px solid #38bdf8; transition: transform 0.25s;
+  }
+  .card:hover { transform: translateY(-6px); }
+  .card h3 { margin-bottom: 8px; color: #0f172a; }
+  .card p { color: #475569; font-size: 15px; }
+
+  .courses { background: #f1f5f9; }
+
+  .contact { background: #0f172a; color: #e2e8f0; }
+  .contact h2 { color: #fff; }
+  .contact .sub { color: #94a3b8; }
+  .contact-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .contact-box {
+    background: #1e293b; padding: 24px; border-radius: 14px; text-align: center;
+  }
+  .contact-box h3 { color: #38bdf8; margin-bottom: 8px; }
+
+  footer {
+    background: #020617; color: #64748b; text-align: center; padding: 20px; font-size: 14px;
+  }
+
+  @media (max-width: 680px) {
+    nav ul { display: none; }
+    section { padding: 60px 5%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Sunrise Public School</div>
+  <ul>
+    <li><a href="#about">Parichay</a></li>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#facilities">Suvidhayein</a></li>
+    <li><a href="#contact">Sampark</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div id="hero-canvas"></div>
+  <div class="hero-text">
+    <h1>Swagat hai <span>Sunrise Public School</span> mein</h1>
+    <p>Gyaan, anushasan aur rachnatmakta ke saath bacchon ka bhavishya gadhna.</p>
+    <a href="#contact" class="btn">Admission Puchhein</a>
+    <a href="#about" class="btn outline">Aur Jaane</a>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <h2>Hamare Bare Mein</h2>
+  <p class="sub">1995 se bacchon ki shiksha aur vikas mein samarpit</p>
+  <div class="about-grid">
+    <div class="stat"><strong>30+</strong>Saal ka anubhav</div>
+    <div class="stat"><strong>1500+</strong>Chhatra</div>
+    <div class="stat"><strong>80+</strong>Anubhavi shikshak</div>
+    <div class="stat"><strong>95%</strong>Parinaam</div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section class="courses" id="courses">
+  <h2>Shaikshik Kaksha</h2>
+  <p class="sub">Nursery se Class 12 tak</p>
+  <div class="cards">
+    <div class="card"><h3>Primary (Nursery - 5)</h3><p>Khel-khel mein seekhne ka tareeka, bhasha, ganit aur kala par vishesh dhyan.</p></div>
+    <div class="card"><h3>Middle (6 - 8)</h3><p>Vishay ki samajh, project based learning aur computer shiksha.</p></div>
+    <div class="card"><h3>Secondary (9 - 10)</h3><p>Board pariksha ki taiyari, niyamit mock tests aur vyaktigat mentoring.</p></div>
+    <div class="card"><h3>Senior Secondary (11 - 12)</h3><p>Science, Commerce aur Humanities streams ke saath career marg-darshan.</p></div>
+  </div>
+</section>
+
+<!-- FACILITIES -->
+<section id="facilities">
+  <h2>Suvidhayein</h2>
+  <p class="sub">Bacchon ke vikas ke liye aadhunik vyavastha</p>
+  <div class="cards">
+    <div class="card"><h3>Smart Classrooms</h3><p>Projector aur digital boards ke saath interactive padhai.</p></div>
+    <div class="card"><h3>Science Lab</h3><p>Physics, Chemistry aur Biology ki prayogshala.</p></div>
+    <div class="card"><h3>Library</h3><p>10,000 se zyada kitaabon ke saath shaant padhne ki jagah.</p></div>
+    <div class="card"><h3>Khel Maidan</h3><p>Cricket, football aur indoor games ki suvidha.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <h2>Sampark Karein</h2>
+  <p class="sub">Admission ya kisi bhi jaankari ke liye hamse judein</p>
+  <div class="contact-grid">
+    <div class="contact-box"><h3>Pata</h3><p>123 School Road, Aapka Shahar</p></div>
+    <div class="contact-box"><h3>Phone</h3><p>+91 00000 00000</p></div>
+    <div class="contact-box"><h3>Email</h3><p>info@sunriseschool.edu</p></div>
+  </div>
+</section>
+
+<footer>© 2026 Sunrise Public School. Sabhi adhikar surakshit.</footer>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+  // Hero section mein animated 3D background
+  const heroWrap = document.getElementById('hero-canvas');
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 100);
+  camera.position.z = 6;
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(heroWrap.clientWidth, heroWrap.clientHeight);
+  heroWrap.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const light = new THREE.DirectionalLight(0x38bdf8, 1.2);
+  light.position.set(3, 4, 5);
+  scene.add(light);
+
+  // Ghoomte hue geometric shapes
+  const shapes = [];
+  const geos = [
+    new THREE.IcosahedronGeometry(0.8, 0),
+    new THREE.OctahedronGeometry(0.7, 0),
+    new THREE.TorusGeometry(0.6, 0.2, 16, 40)
+  ];
+  const colors = [0x38bdf8, 0xa3e635, 0xf472b6];
+  for (let i = 0; i < 9; i++) {
+    const mat = new THREE.MeshStandardMaterial({
+      color: colors[i % colors.length], metalness: 0.3, roughness: 0.4,
+      transparent: true, opacity: 0.8
+    });
+    const mesh = new THREE.Mesh(geos[i % geos.length], mat);
+    mesh.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 3);
+    mesh.userData.speed = 0.003 + Math.random() * 0.008;
+    scene.add(mesh);
+    shapes.push(mesh);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    shapes.forEach(s => {
+      s.rotation.x += s.userData.speed;
+      s.rotation.y += s.userData.speed * 1.5;
+    });
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(heroWrap.clientWidth, heroWrap.clientHeight);
+  });
+</script>
+</body>
+</html>
